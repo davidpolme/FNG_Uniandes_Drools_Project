@@ -31,4 +31,13 @@ rule "Action is of type GENERATE_CUPOS_PORTAL and user does not have permissions
     	System.out.println("User does not have permissions to create mass cupos. Request permissions to your administrator");
 end
 
+rule "Process cupos portal and validate data file exists in the system"
+    when
+        $c: Action(actionType == Role.GENERATE_CUPOS_PORTAL)
+        $u: User(roleIds.contains(Role.USER_ROLE_ID))
+        eval($c.fileExistsInPortal()) // Check if the file was loaded to the system
+    then
+        System.out.println("Start processing opening cupos");
+end
+
 

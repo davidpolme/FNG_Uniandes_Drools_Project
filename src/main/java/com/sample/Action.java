@@ -61,7 +61,13 @@ public class Action {
 	//-----------------------------------
 	
 	public boolean fileExistsInPortal() {
-		return portal.getDataFileByName(fileName) != null;
+		boolean fileExists = portal.getDataFileByName(fileName) != null;
+		if(!fileExists) {
+			System.out.println("ERROR: File does not exist in the system");
+		}
+		
+		
+		return fileExists;
 	}	
 	
 	

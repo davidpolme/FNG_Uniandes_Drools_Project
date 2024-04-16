@@ -9,7 +9,7 @@ public class CreditQuotaOpening {
 	private Integer CIIUCode;
 	private Credit creditReference;
 	private Warranty warrantyReference;
-	private Debtor deptor;
+	private Debtor debtor;
 	private Intermediary bank;
 
 	
@@ -25,7 +25,7 @@ public class CreditQuotaOpening {
 		this.creditReference = creditReference;
 		this.warrantyReference = warrantyReference;
 		this.bank = bank;
-		this.deptor = debtor;
+		this.debtor = debtor;
 	}
 
 	
@@ -38,6 +38,7 @@ public class CreditQuotaOpening {
 		return null;
 		
 	}
+	
 	
 
 	//-----------------------------------
@@ -97,12 +98,12 @@ public class CreditQuotaOpening {
 
 
 	public Debtor getDebtor() {
-		return deptor;
+		return debtor;
 	}
 
 
 	public void setDebtor(Debtor debtor) {
-		this.deptor = debtor;
+		this.debtor = debtor;
 	}
 
 
