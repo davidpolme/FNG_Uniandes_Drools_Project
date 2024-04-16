@@ -21,22 +21,7 @@ public class DroolsTest {
         	
         	Portal portal = createPortal(kSession);
         	createUser(kSession);
-        	
-        	//1 Create loading action
-        	//1.1 Check action and user permissions
-        	//1.2 Check file restrictions
-        	Action loadAnexo5Action = new Action(Role.Action.LOAD_ANEXO_5_FILE, portal);
-        	String anexo5Name = "anexo5.csv";
-        	loadAnexo5Action.setFileRoute("./");
-        	loadAnexo5Action.setFileName(anexo5Name);
-        	
-
-     
-        	
-        	//2 Create cupos creation action
-        	//2.1 Check file name in Portal loaded files
-        	//2.2 Insert Credit opennings and validate data for each 
-        	
+        	cuposOpeningProcessTest(kSession, portal);
             
  
             
@@ -48,6 +33,48 @@ public class DroolsTest {
             t.printStackTrace();
         }
     }
+
+	private static void cuposOpeningProcessTest(KieSession kSession, Portal portal) {
+		//1 Create cupos loading file action
+		//1.1 Check action and user permissions
+		//1.2 Check file restrictions
+		String anexo5Name = createAnexo5LoadingAction(kSession, portal);
+		
+		
+		//2 cupos creation action
+		//2.1 Check file name in Portal loaded files
+		//2.2 Insert Credit openings and validate data for each 
+		createCuposCreationAction(kSession, portal, anexo5Name);
+		
+		//3 Insert cupon opening
+		insertCuposOpening(kSession, portal, anexo5Name);
+	}
+
+	private static void insertCuposOpening(KieSession kSession, Portal portal, String anexo5Name) {
+		List<CreditQuotaOpening> cuponOpenings = CreditQuotaOpening.createCreditQuotaOpeningsFromFileData(portal.getDataFileByName(anexo5Name));
+		
+		for (CreditQuotaOpening opening : cuponOpenings) {
+		    // Access each CreditQuotaOpening object in the loop
+		    // You can perform any actions with the `opening` object here
+		    System.out.println("Processing: " + opening);
+		    kSession.insert(opening);
+		}
+	}
+
+	private static void createCuposCreationAction(KieSession kSession, Portal portal, String anexo5Name) {
+		Action createCuposAction = new Action(Role.Action.GENERATE_CUPO_PORTAL, portal);
+		createCuposAction.setFileName(anexo5Name);
+		kSession.insert(createCuposAction);
+	}
+
+	private static String createAnexo5LoadingAction(KieSession kSession, Portal portal) {
+		Action loadAnexo5Action = new Action(Role.Action.LOAD_ANEXO_5_FILE, portal);
+		String anexo5Name = "anexo5.csv";
+		loadAnexo5Action.setFileRoute("./");
+		loadAnexo5Action.setFileName(anexo5Name);
+		kSession.insert(loadAnexo5Action);
+		return anexo5Name;
+	}
 
 	private static void createUser(KieSession kSession) {
 		ArrayList<Integer> roleIds = new ArrayList<>();

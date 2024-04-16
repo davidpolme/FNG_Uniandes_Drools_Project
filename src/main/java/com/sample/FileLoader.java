@@ -16,7 +16,7 @@ public class FileLoader {
             String line;
             while ((line = br.readLine()) != null) {
                 // Split the line by comma (or another delimiter)
-                String[] values = line.split(",");
+                String[] values = line.split(";");
                 // Add the parsed values to the data list
                 data.add(values);
             }

@@ -26,6 +26,10 @@ public class Portal {
     public void addDataFiles(String fileName, List<String[]> data) {
         loadedDataFiles.put(fileName, data);
     }
+    
+    public List<String[]> getDataFileByName(String name){
+    	return loadedDataFiles.get(name);
+    }
 	
 	//-----------------------------------
 	//------ Getters and Setters --------

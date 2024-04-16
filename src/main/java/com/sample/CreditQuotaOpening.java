@@ -1,5 +1,7 @@
 package com.sample;
 
+import java.util.List;
+
 public class CreditQuotaOpening {
 
 	private Integer id;
@@ -8,13 +10,15 @@ public class CreditQuotaOpening {
 	private Integer CIIUCode;
 	private Credit creditReference;
 	private Warranty warrantyReference;
+	private User borrower;
+	private Intermediary bank;
 
 	
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
 	public CreditQuotaOpening(Integer id, Integer municipalityCode, String documentType, Integer cIIUCode,
-			Credit creditReference, Warranty warrantyReference) {
+			Credit creditReference, Warranty warrantyReference, User borrower, Intermediary bank) {
 		super();
 		this.id = id;
 		this.municipalityCode = municipalityCode;
@@ -22,8 +26,21 @@ public class CreditQuotaOpening {
 		CIIUCode = cIIUCode;
 		this.creditReference = creditReference;
 		this.warrantyReference = warrantyReference;
+		this.bank = bank;
+		this.borrower = borrower;
 	}
 
+	
+	public static List<CreditQuotaOpening> createCreditQuotaOpeningsFromFileData(List<String[]> data){
+		return null;
+	
+	}
+	
+	public static CreditQuotaOpening createCreditQuotaOpeningFromFileData(String data){
+		return null;
+		
+	}
+	
 
 	//-----------------------------------
 	//------ Getters and Setters --------
@@ -88,6 +105,26 @@ public class CreditQuotaOpening {
 
 	public void setWarrantyReference(Warranty warrantyReference) {
 		this.warrantyReference = warrantyReference;
+	}
+
+
+	public User getBorrower() {
+		return borrower;
+	}
+
+
+	public void setBorrower(User borrower) {
+		this.borrower = borrower;
+	}
+
+
+	public Intermediary getBank() {
+		return bank;
+	}
+
+
+	public void setBank(Intermediary bank) {
+		this.bank = bank;
 	}
 	
 }

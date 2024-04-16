@@ -8,14 +8,21 @@ public class Action {
 	private String fileName;
 	private String fileRoute;
 	private Portal portal;
+	private List<String[]> data;
 	
-	
+	//-----------------------------------
+	//------- Constructors --------------
+	//-----------------------------------
 	public Action(Role.Action actionType, Portal portal) {
 		super();
 		this.actionType = actionType;
 		this.portal = portal;
 	}
 	
+	//-----------------------------------
+	//------ Load file functions --------
+	//-----------------------------------
+
 	public boolean validateFileType() {
 		return FileLoader.isCSVFile(fileRoute);
 	}
@@ -26,7 +33,7 @@ public class Action {
 			List<String[]> data = FileLoader.loadCSVFile(fileRoute);
 			
 			if(!data.isEmpty()) {
-				portal.addDataFiles(fileName, data);
+				this.data = data;
 			}
 			
 			return data.isEmpty();
@@ -37,7 +44,24 @@ public class Action {
 		}
 	}
 	
-
+	public void loadDataToPortal() {
+		portal.addDataFiles(fileName, data);
+		System.out.println("Data has been added to FNG portal");
+	}
+	
+	
+	//-----------------------------------
+	//--- Mass cupos creation functions --
+	//-----------------------------------
+	
+	public boolean fileExistsInPortal() {
+		return portal.getDataFileByName(fileName) != null;
+	}	
+	
+	
+	//-----------------------------------
+	//------ Getters and Setters --------
+	//-----------------------------------
 	public Role.Action getActionType() {
 		return actionType;
 	}
