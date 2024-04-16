@@ -3,32 +3,32 @@ package com.sample
 import com.sample.Order;
 import com.sample.Client;
  
-rule "Regular memership discount"
+rule "Action is of type LOAD_ANEXO_5_FILE and user does not have permissions"
     when
-    	$c: Client(type == Client.REGULAR)
-        $o: Order(client == $c)
+    	$c: Action(actionType == Role.LOAD_ANEXO_5_FILE)
+        $u: User(!roleIds.contains(Role.USER_ROLE_ID))
     then
-    	System.out.println("Regular memership discount");
-		$o.applyRegularDisccount();
+    	System.out.println("User does not have permissions to upload ANEXO 5. Request permissions to your administrator");
 end
 
-rule "Premium memership discount"
+rule "Upload CSV file to the system if CSV and not empty"
     when
-    	$c: Client(type == Client.PREMIUM)
-        $o: Order(client == $c, products.size < 4)
+        $c: Action(actionType == Role.LOAD_ANEXO_5_FILE)
+        $u: User(roleIds.contains(Role.USER_ROLE_ID))
+        eval($c.validateCSVFileType()) // Check if the file is a CSV file
+        eval($c.validateFileIsNotEmpty()) // Check if the file is not empty
     then
-    	System.out.println("Premium memership discount");
-		$o.applyPremiumDisccount();
+        System.out.println("Uploading CSV file to the system");
+        // Perform the file upload operation
+        $c.loadDataToPortal();
 end
 
-rule "Premium memership discount and 4 products bought"
+rule "Action is of type GENERATE_CUPOS_PORTAL and user does not have permissions"
     when
-    	$c: Client(type == Client.PREMIUM)
-        $o: Order( client == $c, products.size >= 4)
+    	$c: Action(actionType == Role.GENERATE_CUPOS_PORTAL)
+        $u: User(!roleIds.contains(Role.USER_ROLE_ID))
     then
-    	System.out.println("Premium memership discount and 4 products bought");
-		$o.applyPremiumAdittionalDisccount();
-		$o.sendEmailToCFO("a.bayona@uniandes.edu.co");
+    	System.out.println("User does not have permissions to create mass cupos. Request permissions to your administrator");
 end
 
 

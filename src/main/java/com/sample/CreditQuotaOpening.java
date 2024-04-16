@@ -5,29 +5,27 @@ import java.util.List;
 public class CreditQuotaOpening {
 
 	private Integer id;
-	private Integer municipalityCode;
 	private String documentType; 
 	private Integer CIIUCode;
 	private Credit creditReference;
 	private Warranty warrantyReference;
-	private User borrower;
+	private Debtor deptor;
 	private Intermediary bank;
 
 	
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
-	public CreditQuotaOpening(Integer id, Integer municipalityCode, String documentType, Integer cIIUCode,
-			Credit creditReference, Warranty warrantyReference, User borrower, Intermediary bank) {
+	public CreditQuotaOpening(Integer id, String documentType, Integer cIIUCode,
+			Credit creditReference, Warranty warrantyReference, Debtor debtor, Intermediary bank) {
 		super();
 		this.id = id;
-		this.municipalityCode = municipalityCode;
 		this.documentType = documentType;
 		CIIUCode = cIIUCode;
 		this.creditReference = creditReference;
 		this.warrantyReference = warrantyReference;
 		this.bank = bank;
-		this.borrower = borrower;
+		this.deptor = debtor;
 	}
 
 	
@@ -55,16 +53,6 @@ public class CreditQuotaOpening {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-
-	public Integer getMunicipalityCode() {
-		return municipalityCode;
-	}
-
-
-	public void setMunicipalityCode(Integer municipalityCode) {
-		this.municipalityCode = municipalityCode;
 	}
 
 
@@ -108,13 +96,13 @@ public class CreditQuotaOpening {
 	}
 
 
-	public User getBorrower() {
-		return borrower;
+	public Debtor getDebtor() {
+		return deptor;
 	}
 
 
-	public void setBorrower(User borrower) {
-		this.borrower = borrower;
+	public void setDebtor(Debtor debtor) {
+		this.deptor = debtor;
 	}
 
 

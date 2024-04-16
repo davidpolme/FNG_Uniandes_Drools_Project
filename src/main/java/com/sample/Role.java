@@ -18,7 +18,7 @@ public class Role {
 	}
 	
 	 public enum Action {
-	        LOAD_ANEXO_5_FILE, GENERATE_CUPO_PORTAL, LOAD_ANEXO_18_FILE, MASS_CUPOS_CANCELLATION, CREATE_USER, DELETE_USER;
+	        LOAD_ANEXO_5_FILE, GENERATE_CUPOS_PORTAL, LOAD_ANEXO_18_FILE, MASS_CUPOS_CANCELLATION, CREATE_USER, DELETE_USER;
 	    }
 	 
 	// Mapping from role types to allowed actions
@@ -26,9 +26,9 @@ public class Role {
 
     static {
         // Define the allowed actions for each role type
-        roleActionsMap.put(RoleType.ADMIN, EnumSet.of(Action.LOAD_ANEXO_5_FILE, Action.GENERATE_CUPO_PORTAL, Action.LOAD_ANEXO_18_FILE, 
+        roleActionsMap.put(RoleType.ADMIN, EnumSet.of(Action.LOAD_ANEXO_5_FILE, Action.GENERATE_CUPOS_PORTAL, Action.LOAD_ANEXO_18_FILE, 
         		Action.MASS_CUPOS_CANCELLATION, Action.CREATE_USER, Action.DELETE_USER));
-        roleActionsMap.put(RoleType.USER, EnumSet.of(Action.LOAD_ANEXO_5_FILE, Action.GENERATE_CUPO_PORTAL, Action.LOAD_ANEXO_18_FILE, 
+        roleActionsMap.put(RoleType.USER, EnumSet.of(Action.LOAD_ANEXO_5_FILE, Action.GENERATE_CUPOS_PORTAL, Action.LOAD_ANEXO_18_FILE, 
         		Action.MASS_CUPOS_CANCELLATION));
     }
 	

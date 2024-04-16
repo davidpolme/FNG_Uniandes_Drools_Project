@@ -62,7 +62,7 @@ public class DroolsTest {
 	}
 
 	private static void createCuposCreationAction(KieSession kSession, Portal portal, String anexo5Name) {
-		Action createCuposAction = new Action(Role.Action.GENERATE_CUPO_PORTAL, portal);
+		Action createCuposAction = new Action(Role.Action.GENERATE_CUPOS_PORTAL, portal);
 		createCuposAction.setFileName(anexo5Name);
 		kSession.insert(createCuposAction);
 	}

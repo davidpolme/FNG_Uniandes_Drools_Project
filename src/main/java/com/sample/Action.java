@@ -23,8 +23,14 @@ public class Action {
 	//------ Load file functions --------
 	//-----------------------------------
 
-	public boolean validateFileType() {
-		return FileLoader.isCSVFile(fileRoute);
+	public boolean validateCSVFileType() {
+		boolean csv = FileLoader.isCSVFile(fileRoute);
+		
+		if(!csv) {
+			System.out.println("ERROR: File is not of CSV type");
+		}
+		
+		return csv;
 	}
 	
 	

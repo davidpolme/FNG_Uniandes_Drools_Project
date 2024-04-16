@@ -4,29 +4,27 @@ import java.util.Date;
 
 public class Credit {
 	private String id;
-	private User financialIntermediary;
-	private User borrower;
 	private Double amount;
 	private Double interestRate;
 	private Integer termInMonths;
 	private String status;
 	private Date startDate;
+	private String currencyCode;
 	
 	
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
-	public Credit(String id, User financialIntermediary, User borrower, Double amount, Double interestRate,
-			Integer termInMonths, String status, Date startDate) {
+	public Credit(String id, Double amount, Double interestRate,
+			Integer termInMonths, String status, Date startDate, String currencyCode) {
 		super();
 		this.id = id;
-		this.financialIntermediary = financialIntermediary;
-		this.borrower = borrower;
 		this.amount = amount;
 		this.interestRate = interestRate;
 		this.termInMonths = termInMonths;
 		this.status = status;
 		this.startDate = startDate;
+		this.setCurrencyCode(currencyCode);
 	}
 	
 	
@@ -39,18 +37,6 @@ public class Credit {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public User getFinancialIntermediary() {
-		return financialIntermediary;
-	}
-	public void setFinancialIntermediary(User financialIntermediary) {
-		this.financialIntermediary = financialIntermediary;
-	}
-	public User getBorrower() {
-		return borrower;
-	}
-	public void setBorrower(User borrower) {
-		this.borrower = borrower;
 	}
 	public Double getAmount() {
 		return amount;
@@ -81,6 +67,18 @@ public class Credit {
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+
+
+	public String getCurrencyCode() {
+		return currencyCode;
+	}
+
+
+
+	public void setCurrencyCode(String currencyCode) {
+		this.currencyCode = currencyCode;
 	}
 	
 	
