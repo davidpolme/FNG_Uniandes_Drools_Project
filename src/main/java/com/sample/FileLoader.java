@@ -24,5 +24,10 @@ public class FileLoader {
         
         return data;
     }
+    
+    public static boolean isCSVFile(String filePath) {
+        // Check if the file path ends with ".csv" (case-insensitive)
+        return filePath.toLowerCase().endsWith(".csv");
+    }
 
 }

@@ -19,12 +19,23 @@ public class DroolsTest {
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	
-        	createPortal(kSession);
+        	Portal portal = createPortal(kSession);
         	createUser(kSession);
         	
-        	String anexo5Route = "./anexo5.csv";
-        	List<String[]> data = FileLoader.loadCSVFile(anexo5Route);
+        	//1 Create loading action
+        	//1.1 Check action and user permissions
+        	//1.2 Check file restrictions
+        	Action loadAnexo5Action = new Action(Role.Action.LOAD_ANEXO_5_FILE, portal);
+        	String anexo5Name = "anexo5.csv";
+        	loadAnexo5Action.setFileRoute("./");
+        	loadAnexo5Action.setFileName(anexo5Name);
         	
+
+     
+        	
+        	//2 Create cupos creation action
+        	//2.1 Check file name in Portal loaded files
+        	//2.2 Insert Credit opennings and validate data for each 
         	
             
  
@@ -45,7 +56,7 @@ public class DroolsTest {
 		kSession.insert(fngUser);
 	}
 
-	private static void createPortal(KieSession kSession) {
+	private static Portal createPortal(KieSession kSession) {
 		// Create an ArrayList to hold User objects
 		ArrayList<Intermediary> intermediaries = new ArrayList<>();
 
@@ -66,5 +77,7 @@ public class DroolsTest {
 
 		Portal portal = new Portal(intermediaries, municipalityCodes, roles);
 		kSession.insert(portal);
+		
+		return portal;
 	}
 }

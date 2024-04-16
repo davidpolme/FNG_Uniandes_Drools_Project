@@ -1,5 +1,7 @@
 package com.sample;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Portal {
@@ -7,6 +9,7 @@ public class Portal {
 	private ArrayList<Intermediary> financialIntermediaries;
 	private ArrayList<Integer> municipalityCodes;
 	private ArrayList<Role> roles;
+	private HashMap<String, List<String[]>> loadedDataFiles;
 	
 	//-----------------------------------
 	//------- Constructors --------------
@@ -16,8 +19,13 @@ public class Portal {
 		this.financialIntermediaries = financialIntermediaries;
 		this.municipalityCodes = municipalityCodes;
 		this.roles = roles;
+		this.loadedDataFiles = new HashMap<>();
 	}
 	
+	
+    public void addDataFiles(String fileName, List<String[]> data) {
+        loadedDataFiles.put(fileName, data);
+    }
 	
 	//-----------------------------------
 	//------ Getters and Setters --------
