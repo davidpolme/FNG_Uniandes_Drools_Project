@@ -1,7 +1,6 @@
 package com.sample
- 
-import com.sample.Order;
-import com.sample.Client;
+
+import java.util.List;
  
 rule "Action is of type LOAD_ANEXO_5_FILE and user does not have permissions"
     when
@@ -37,7 +36,25 @@ rule "Process cupos portal and validate data file exists in the system"
         $u: User(roleIds.contains(Role.USER_ROLE_ID))
         eval($c.fileExistsInPortal()) // Check if the file was loaded to the system
     then
-        System.out.println("Start processing opening cupos");
+        System.out.println("Start processing openning cupos");
+        List<CreditQuotaOpening> cuponOpenings = CreditQuotaOpening.createQuotaOpeningsFromData($c.getData());
+        
+        for (CreditQuotaOpening opening : cuponOpenings) {
+		  System.out.println("Processing: " + opening);
+		  insert(opening);
+		}
+end
+
+rule "Validate Credit Quota Opening"
+    when
+        $o: CreditQuotaOpening()
+        $u: User(roleIds.contains(Role.USER_ROLE_ID))
+        eval($o.validateIntermediaryNit())
+        eval($o.validateDebtorId())
+        eval($o.validateDeptorTypeId())
+    then
+        System.out.println("Insert new cupon in the System");
+        $o.saveCrediQuotaIntoSystem();
 end
 
 

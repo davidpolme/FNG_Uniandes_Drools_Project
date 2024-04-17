@@ -30,6 +30,15 @@ public class Portal {
     public List<String[]> getDataFileByName(String name){
     	return loadedDataFiles.get(name);
     }
+    
+    public boolean doesIntermediaryExist(Integer id) {
+        for (Intermediary intermediary : financialIntermediaries) {
+            if (intermediary.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	//-----------------------------------
 	//------ Getters and Setters --------

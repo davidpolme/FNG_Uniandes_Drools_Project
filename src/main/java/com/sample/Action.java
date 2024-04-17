@@ -9,7 +9,7 @@ public class Action {
 	private String fileRoute;
 	private Portal portal;
 	private List<String[]> data;
-	
+
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
@@ -91,6 +91,13 @@ public class Action {
 	}
 	public void setFileRoute(String fileRoute) {
 		this.fileRoute = fileRoute;
+	}
+	public List<String[]> getData() {
+		return data;
+	}
+
+	public void setData(List<String[]> data) {
+		this.data = data;
 	}
 	
 	

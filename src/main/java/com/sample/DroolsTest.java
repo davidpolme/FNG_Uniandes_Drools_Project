@@ -47,18 +47,7 @@ public class DroolsTest {
 		createCuposCreationAction(kSession, portal, anexo5Name);
 		
 		//3 Insert cupon opening
-		insertCuposOpening(kSession, portal, anexo5Name);
-	}
-
-	private static void insertCuposOpening(KieSession kSession, Portal portal, String anexo5Name) {
-		List<CreditQuotaOpening> cuponOpenings = CreditQuotaOpening.createCreditQuotaOpeningsFromFileData(portal.getDataFileByName(anexo5Name));
-		
-		for (CreditQuotaOpening opening : cuponOpenings) {
-		    // Access each CreditQuotaOpening object in the loop
-		    // You can perform any actions with the `opening` object here
-		    System.out.println("Processing: " + opening);
-		    kSession.insert(opening);
-		}
+//		insertCuposOpening(kSession, portal, anexo5Name);
 	}
 
 	private static void createCuposCreationAction(KieSession kSession, Portal portal, String anexo5Name) {
@@ -73,6 +62,7 @@ public class DroolsTest {
 		loadAnexo5Action.setFileRoute("./");
 		loadAnexo5Action.setFileName(anexo5Name);
 		kSession.insert(loadAnexo5Action);
+	
 		return anexo5Name;
 	}
 
