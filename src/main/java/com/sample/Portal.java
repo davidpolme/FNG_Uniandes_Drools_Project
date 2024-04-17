@@ -9,17 +9,20 @@ public class Portal {
 	private ArrayList<Intermediary> financialIntermediaries;
 	private ArrayList<String> municipalityCodes;
 	private ArrayList<Role> roles;
+	private HashMap<String, List<String[]>> reservations;
 	private HashMap<String, List<String[]>> loadedDataFiles;
 	
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
 	public Portal(ArrayList<Intermediary> financialIntermediaries, ArrayList<String> municipalityCodes,
-			ArrayList<Role> roles) {
+			ArrayList<Role> roles, ArrayList<String> reservations) {
 		this.financialIntermediaries = financialIntermediaries;
 		this.municipalityCodes = municipalityCodes;
 		this.roles = roles;
 		this.loadedDataFiles = new HashMap<>();
+		this.reservations = new HashMap<>();
+		
 	}
 	
 	
@@ -29,6 +32,10 @@ public class Portal {
     
     public List<String[]> getDataFileByName(String name){
     	return loadedDataFiles.get(name);
+    }
+    
+    public List<String[]> getReservationData(String id){
+    	return reservations.get(id);
     }
     
     public boolean doesIntermediaryExist(Integer id) {
@@ -47,6 +54,20 @@ public class Portal {
             }
         }
         return false;
+    }
+    
+    public boolean cancelReservation(String idReservation) {
+        List<String[]> reservationData = getDataFileByName("reservations.csv");
+        if (reservationData != null) {
+            for (String[] reservation : reservationData) {
+                if (reservation[0].equals(idReservation)) {
+                    reservation[3] = "Cancelled";
+                    return true; 
+                }
+            }
+        }	
+        
+        return false; 
     }
 	
 	//-----------------------------------

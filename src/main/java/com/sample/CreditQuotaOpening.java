@@ -47,8 +47,7 @@ public class CreditQuotaOpening {
 		// TODO: send a message to the Portal system to save this process
 		System.out.println("This credit openning has been completed successfully");
 	}
-	
-	
+
 	public boolean validateIntermediaryNit(){
 		String bankNit = this.bank.getId().toString();
 		boolean isValid1 = bankNit.length() == 10;

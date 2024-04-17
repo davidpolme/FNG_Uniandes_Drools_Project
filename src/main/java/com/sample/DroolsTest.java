@@ -21,12 +21,13 @@ public class DroolsTest {
         	Portal portal = createPortal(kSession);
         	createUser(kSession);
         	cuposOpeningProcessTest(kSession, portal);
+        	cancelReservationAction(kSession, portal);
             
  
             
             kSession.fireAllRules();
             kSession.dispose ();
-            System.out.println("Aplicación finalizada con exito !!");
+            System.out.println("Aplicaciï¿½n finalizada con exito !!");
             
         } catch (Throwable t) {
             t.printStackTrace();
@@ -54,6 +55,12 @@ public class DroolsTest {
 		createCuposAction.setFileName(anexo5Name);
 		kSession.insert(createCuposAction);
 	}
+	
+	private static void cancelReservationAction(KieSession kSession, Portal portal) {
+		Action cancelReserve = new Action(Role.Action.CANCEL_RESERVE, portal);
+		cancelReserve.cancelReservation(null);
+		kSession.insert(cancelReserve);
+	}
 
 	private static String createAnexo5LoadingAction(KieSession kSession, Portal portal) {
 		Action loadAnexo5Action = new Action(Role.Action.LOAD_ANEXO_5_FILE, portal);
@@ -64,7 +71,7 @@ public class DroolsTest {
 	
 		return anexo5Name;
 	}
-
+	
 	private static void createUser(KieSession kSession) {
 		ArrayList<Integer> roleIds = new ArrayList<>();
 		roleIds.add(Role.USER_ROLE_ID);
@@ -87,13 +94,16 @@ public class DroolsTest {
 		municipalityCodes.addAll(Arrays.asList("5001", "5002", "5004", "5005", "5006"));
 		
 		ArrayList<Role> roles = new ArrayList<>();
+		ArrayList<String> reservations = new ArrayList<>();
 		roles.add(new Role(Role.ADMIN_ROLE_ID, Role.RoleType.ADMIN));
 		roles.add(new Role(Role.USER_ROLE_ID, Role.RoleType.USER));
 
 
-		Portal portal = new Portal(intermediaries, municipalityCodes, roles);
+		Portal portal = new Portal(intermediaries, municipalityCodes, roles, reservations);
 		kSession.insert(portal);
 		
 		return portal;
 	}
+	
+	
 }

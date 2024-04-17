@@ -7,6 +7,9 @@ public class Action {
 	private Role.Action actionType;
 	private String fileName;
 	private String fileRoute;
+	private String idReservation;
+
+
 	public Portal portal;
 	private List<String[]> data;
 
@@ -70,6 +73,25 @@ public class Action {
 		return fileExists;
 	}	
 	
+	public boolean reserveExistsInPortal() {
+		boolean reserveExists = portal.getReservationData(idReservation) != null;
+		if(!reserveExists) {
+			System.out.println("ERROR: Reserve does not exist in the system");
+		}
+		return reserveExists;
+	}	
+	
+	public void cancelReservation(String idReservation) {
+
+	    System.out.println("Cancelando reserva con ID: " + idReservation);
+
+	    if (portal.cancelReservation(idReservation)) {
+	        System.out.println("Reserva cancelada con éxito.");
+	    } else {
+	        System.out.println("Error al cancelar la reserva.");
+	    }
+	}
+	
 	
 	//-----------------------------------
 	//------ Getters and Setters --------
@@ -99,6 +121,18 @@ public class Action {
 	public void setData(List<String[]> data) {
 		this.data = data;
 	}
+	
+	public String getIdReservation() {
+		return idReservation;
+	}
+
+	public void setIdReservation(String idReservation) {
+		this.idReservation = idReservation;
+	}
+	
+	
+	
+
 	
 	
 }
