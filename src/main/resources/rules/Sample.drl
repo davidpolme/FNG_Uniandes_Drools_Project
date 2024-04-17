@@ -2,7 +2,7 @@ package com.sample
  
 rule "Action is of type LOAD_ANEXO_5_FILE and user does not have permissions"
     when
-    	$c: Action(actionType == Role.LOAD_ANEXO_5_FILE)
+    	$c: Action(actionType == Role.Action.LOAD_ANEXO_5_FILE)
         $u: User(!roleIds.contains(Role.USER_ROLE_ID))
     then
     	System.out.println("User does not have permissions to upload ANEXO 5. Request permissions to your administrator");
@@ -10,7 +10,7 @@ end
 
 rule "Upload CSV file to the system if CSV and not empty"
     when
-        $c: Action(actionType == Role.LOAD_ANEXO_5_FILE)
+        $c: Action(actionType == Role.Action.LOAD_ANEXO_5_FILE)
         $u: User(roleIds.contains(Role.USER_ROLE_ID))
         eval($c.validateCSVFileType()) // Check if the file is a CSV file
         eval($c.validateFileIsNotEmpty()) // Check if the file is not empty
@@ -22,7 +22,7 @@ end
 
 rule "Action is of type GENERATE_CUPOS_PORTAL and user does not have permissions"
     when
-    	$c: Action(actionType == Role.GENERATE_CUPOS_PORTAL)
+    	$c: Action(actionType == Role.Action.GENERATE_CUPOS_PORTAL)
         $u: User(!roleIds.contains(Role.USER_ROLE_ID))
     then
     	System.out.println("User does not have permissions to create mass cupos. Request permissions to your administrator");
@@ -30,7 +30,7 @@ end
 
 rule "Process cupos portal and validate data file exists in the system"
     when
-        $c: Action(actionType == Role.GENERATE_CUPOS_PORTAL)
+        $c: Action(actionType == Role.Action.GENERATE_CUPOS_PORTAL)
         $u: User(roleIds.contains(Role.USER_ROLE_ID))
         eval($c.fileExistsInPortal()) // Check if the file was loaded to the system
     then

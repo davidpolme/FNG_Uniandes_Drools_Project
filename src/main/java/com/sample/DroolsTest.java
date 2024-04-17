@@ -2,7 +2,6 @@ package com.sample;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
