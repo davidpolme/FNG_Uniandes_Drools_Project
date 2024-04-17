@@ -6,7 +6,7 @@ public class CreditQuotaOpening {
 
 	private Integer id;
 	private String documentType; 
-	private Integer CIIUCode;
+	private String CIIUCode;
 	private Credit creditReference;
 	private Warranty warrantyReference;
 	private Debtor debtor;
@@ -17,7 +17,7 @@ public class CreditQuotaOpening {
 	//-----------------------------------
 	//------- Constructors --------------
 	//-----------------------------------
-	public CreditQuotaOpening(Integer id, String documentType, Integer cIIUCode,
+	public CreditQuotaOpening(Integer id, String documentType, String cIIUCode,
 			Credit creditReference, Warranty warrantyReference, Debtor debtor, Intermediary bank, Portal portal) {
 		super();
 		this.id = id;
@@ -31,12 +31,14 @@ public class CreditQuotaOpening {
 	}
 
 	
-	public static List<CreditQuotaOpening> createQuotaOpeningsFromData(List<String[]> data, Portal portal){
+	public static CreditQuotaOpening[] createQuotaOpeningsFromData(List<String[]> data, Portal portal){
+		//TODO: create method to read from CSV and create objects
 		return null;
 	
 	}
 	
 	public static CreditQuotaOpening createQuotaOpeningFromData(String data){
+		//TODO: create method to read from CSV and create objects
 		return null;
 		
 	}
@@ -70,7 +72,7 @@ public class CreditQuotaOpening {
 	
 	public boolean validateDebtorId(){
 		String debtorId = this.debtor.getId();
-		boolean isValid = debtorId.length() > 10 && this.debtor.getIdType() == Debtor.CC;
+		boolean isValid = debtorId.length() <= 10 && this.debtor.getIdType() == Debtor.CC;
 		if (!isValid) {
 			System.out.println("Id is of type CC and number of characters is more than 10, validate the id and update it");	
 		}
@@ -84,18 +86,85 @@ public class CreditQuotaOpening {
 		return isValid && isValid2;
 	}
 	
-	public boolean validateDeptorTypeId(){
+	public boolean validateDebtorTypeId(){
 		String idType = this.debtor.getIdType();
 		boolean isValid = idType.equals(Debtor.CC) || idType.equals(Debtor.CE) || idType.equals(Debtor.NIT);
 		
 		if (!isValid) {
-			System.out.println("Error in document type allowed values “NIT, CC, CE” if it contains a different value, adjust the field and execute the process again.");	
+			System.out.println("Non-numeric characters exist, validate the id of the user, correct the wrong character");	
 		}
 		
 		return isValid;
 	}
 	
+	public boolean validateMinicipalityCode(){
+		String code = this.debtor.getMunicipalityCode();
 	
+		boolean isValid = portal.doesMunicipalityExist(code);
+		
+		if (!isValid) {
+			System.out.println("The municipality code does not exist in the registered codes");	
+		}
+		
+		boolean isValid2 =  code.length() <= 5;
+		if (!isValid2) {
+			System.out.println("The municipality code exceeds 5 numerical characters, action validate the municipality code and correct the error");	
+		}
+		
+		boolean isValid3 = Utils.isNumeric(code);
+		if (!isValid3) {
+			System.out.println("There are non-numeric values in the Municipality code, action validate the municipality code and correct the error.");	
+		}
+		boolean isValid4 = code.isEmpty();
+		if (!isValid4) {
+			System.out.println("The municipality code field is empty, identify the municipality code and complete the field.");	
+		}
+
+		return isValid && isValid2 && isValid3 && isValid4;
+	}
+	
+	public boolean validateCIIUCode(){
+		boolean isValid = this.CIIUCode.length() <= 4;
+		if (!isValid) {
+			System.out.println("CIIU code exceeds 4 digits, action validate the code correct and execute again.");	
+		}
+		boolean isValid2 = Utils.isNumeric(this.CIIUCode);
+		if (!isValid) {
+			System.out.println("Alphanumeric characters in the code, action validate the alphanumeric characters and remove them from the code.");	
+		}
+		
+		return isValid && isValid2;
+	}
+	
+	public boolean validateCreditReference(){
+		String reference = this.creditReference.getId();
+		boolean isValid = reference.length() <= 14;
+		if (!isValid) {
+			System.out.println("Credit reference code exceeds 14 digits, action validate the code correct and execute again.");	
+		}
+		boolean isValid2 = Utils.isNumeric(reference);
+		if (!isValid2) {
+			System.out.println("Alphanumeric characters in the Credit reference, action validate the alphanumeric characters and remove them from the code.");	
+		}
+		return isValid && isValid2;
+		
+		
+	}
+	
+	
+	public boolean validateWarrantyCode(){
+		String reference = this.warrantyReference.getId();
+		boolean isValid = reference.length() <= 6;
+		if (!isValid) {
+			System.out.println("Warranty Code exceeds 6 digits, action validate the code correct and execute again.");	
+		}
+		boolean isValid2 = Utils.validateWarrantyCodePattern(reference);
+		if (!isValid) {
+			System.out.println("Warranty Code does not match the required pattern. The first three characters must be numeric, and the last three must be letters.");	
+		}
+		
+		return isValid && isValid2;
+	}
 	
 
 	//-----------------------------------
@@ -123,12 +192,12 @@ public class CreditQuotaOpening {
 	}
 
 
-	public Integer getCIIUCode() {
+	public String getCIIUCode() {
 		return CIIUCode;
 	}
 
 
-	public void setCIIUCode(Integer cIIUCode) {
+	public void setCIIUCode(String cIIUCode) {
 		CIIUCode = cIIUCode;
 	}
 

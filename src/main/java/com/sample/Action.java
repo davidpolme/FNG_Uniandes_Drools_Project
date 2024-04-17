@@ -7,7 +7,7 @@ public class Action {
 	private Role.Action actionType;
 	private String fileName;
 	private String fileRoute;
-	private Portal portal;
+	public Portal portal;
 	private List<String[]> data;
 
 	//-----------------------------------

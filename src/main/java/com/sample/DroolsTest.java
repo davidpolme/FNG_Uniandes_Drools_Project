@@ -84,8 +84,8 @@ public class DroolsTest {
 		intermediaries.add(new Intermediary(1011, "Banco D"));
 		intermediaries.add(new Intermediary(1213, "Banco E"));
 		
-		ArrayList<Integer> municipalityCodes = new ArrayList<>();
-		municipalityCodes.addAll(Arrays.asList(5001, 5002, 5004, 5005, 5006));
+		ArrayList<String> municipalityCodes = new ArrayList<>();
+		municipalityCodes.addAll(Arrays.asList("5001", "5002", "5004", "5005", "5006"));
 		
 		ArrayList<Role> roles = new ArrayList<>();
 		roles.add(new Role(Role.ADMIN_ROLE_ID, Role.RoleType.ADMIN));
