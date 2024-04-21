@@ -60,3 +60,39 @@ rule "Validate Credit Quota Opening"
 end
 
 
+
+//-------------------Case: Cancel Reservation----------------------//
+
+
+rule "Action is of type CANCEL_RESERVE and user does not have permissions"
+    when
+        $c: Action(actionType == Role.Action.CANCEL_RESERVE)
+        $u: User(!roleIds.contains(Role.USER_ROLE_ID))
+    then
+        System.out.println("User does not have permissions to cancel reserve. Request permissions to your administrator");
+end
+
+rule "Cancel Reservation if Exists"
+    when
+        $c: Action(actionType == Role.Action.CANCEL_RESERVE)
+        $u: User(roleIds.contains(Role.USER_ROLE_ID))
+        eval($c.reserveExistsInPortal()) // Check if the reserve exists in the system
+    then
+        System.out.println("Cancelling reservation");
+
+		ReserveManagement.reserveCancellation($c.getIdReservation());
+        System.out.println("Reservation with ID " + $c.getIdReservation().id + " cancelled.");
+		LogManagement.saveLog("Reservation with ID " + $c.getIdReservation().id + " was cancelled.");
+end
+
+rule "Validate Cancelled Reservations"
+    when
+        $c: Action(actionType == Role.Action.CANCEL_RESERVE)
+        eval($c.reserveExistsInPortal())	 	
+    then
+        System.out.println("Validating cancelled reservations");
+        $c.validateCancelledReservations(); 
+        System.out.println("Cancelled reservations validated");	
+end
+
+
